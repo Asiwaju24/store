@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastTrack | Autonomous Global Logistics & Supply Chain Intelligence</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        deep: {
+                            bg: '#08070d',
+                            surface: '#0d0b14',
+                            card: '#13101e',
+                            border: 'rgba(157, 78, 221, 0.2)',
+                            borderGlow: 'rgba(199, 125, 255, 0.45)',
+                        },
+                        violet: {
+                            neon: '#c77dff',
+                            electric: '#9d4edd',
+                            deep: '#7b2cbf',
+                            dark: '#3c096c',
+                            black: '#240046'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    },
+                    boxShadow: {
+                        'purple-glow': '0 0 30px rgba(157, 78, 221, 0.35)',
+                        'purple-lg': '0 0 50px rgba(199, 125, 255, 0.45)',
+                        'purple-sm': '0 0 15px rgba(157, 78, 221, 0.25)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.7)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles & Animations -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        
+        body {
+            background-color: #08070d;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(157, 78, 221, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(60, 9, 108, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(36, 0, 70, 0.3) 0px, transparent 80%);
+            background-attachment: fixed;
+            color: #f3f4f6;
+        }
+
+        /* Glassmorphism Styling matching prompt inspiration */
+        .glass-card {
+            background: rgba(19, 16, 30, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(199, 125, 255, 0.5);
+            box-shadow: 0 0 25px rgba(157, 78, 221, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .glass-nav {
+            background: rgba(8, 7, 13, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+        }
+
+        /* Purple Glow Animations */
+        @keyframes pulse-purple {
+            0%, 100% { box-shadow: 0 0 20px rgba(157, 78, 221, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(199, 125, 255, 0.8); }
+        }
+
+        .pulse-purple-glow {
+            animation: pulse-purple 3s infinite ease-in-out;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08070d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9d4edd;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c77dff;
+        }
+
+        /* Gradient Text */
+        .gradient-text-purple {
+            background: linear-gradient(135deg, #ffffff 30%, #c77dff 70%, #9d4edd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-text-highlight {
+            background: linear-gradient(135deg, #c77dff 0%, #9d4edd 50%, #7b2cbf 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased bg-deep-bg text-gray-100 selection:bg-violet-neon selection:text-black">
+
+    <!-- Navbar Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-violet-neon via-violet-electric to-violet-dark flex items-center justify-center text-white shadow-purple-glow group-hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-bolt text-lg"></i>
+                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-neon opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-violet-neon"></span>
+                    </span>
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-wider font-mono text-white group-hover:text-violet-neon transition">FAST<span class="text-violet-neon">TRACK</span></span>
+                    <span class="block text-[9px] font-mono tracking-widest text-gray-400 uppercase">AI Supply OS v5.2</span>
+                </div>
+            </a>
+
+            <!-- Nav Links (Desktop) -->
+            <nav class="hidden md:flex items-center space-x-8 text-xs font-semibold uppercase tracking-wider text-gray-300 font-mono">
+                <a href="#hero" class="hover:text-violet-neon transition text-violet-neon">Home</a>
+                <a href="#tracking-section" class="hover:text-violet-neon transition">Live Tracking</a>
+                <a href="#services" class="hover:text-violet-neon transition">Services</a>
+                <a href="#operations" class="hover:text-violet-neon transition">Operations</a>
+                <a href="#pricing" class="hover:text-violet-neon transition">Pricing</a>
+                <a href="#testimonials" class="hover:text-violet-neon transition">Global Mesh</a>
+            </nav>
+
+            <!-- Navigation Actions -->
+            <div class="flex items-center space-x-4">
+                <button onclick="openPortalModal()" class="hidden sm:flex items-center space-x-2 text-xs font-mono text-gray-300 hover:text-white px-3 py-2 rounded-xl hover:bg-deep-surface transition">
+                    <i class="fa-solid fa-lock text-violet-neon"></i>
+                    <span>Console Login</span>
+                </button>
+                <button onclick="openPortalModal()" class="bg-gradient-to-r from-violet-electric to-violet-dark hover:from-violet-neon hover:to-violet-electric text-white font-mono font-bold text-xs px-5 py-2.5 rounded-full shadow-purple-glow transition-all duration-300 active:scale-95 flex items-center space-x-2">
+                    <span>Access Portal</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden min-h-screen flex flex-col justify-center">
+        <!-- Radial Glowing Backdrop Effects -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-dark/20 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Hero Top Badge -->
+            <div class="flex justify-center mb-6">
+                <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-deep-card border border-violet-electric/30 text-xs font-mono text-violet-neon shadow-purple-sm">
+                    <span class="w-2 h-2 rounded-full bg-violet-neon animate-pulse"></span>
+                    <span>AI-Powered Next-Gen Autonomous Logistics</span>
+                </div>
+            </div>
+
+            <!-- Main Headline -->
+            <div class="text-center max-w-4xl mx-auto mb-8">
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight mb-6">
+                    Orchestrate Global Logistics with <br>
+                    <span class="gradient-text-highlight">Next-Gen Intelligence</span>
+                </h1>
+                <p class="text-base sm:text-lg text-gray-400 font-normal max-w-2xl mx-auto">
+                    FastTrack seamlessly connects fleet telematics, autonomous warehousing, and predictive route optimization across 180+ countries.
+                </p>
+            </div>
+
+            <!-- Hero Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+                <a href="#tracking-section" class="bg-gradient-to-r from-violet-electric to-violet-dark hover:from-violet-neon hover:to-violet-electric text-white font-mono font-bold text-sm px-8 py-3.5 rounded-full shadow-purple-glow transition duration-300 flex items-center space-x-3">
+                    <i class="fa-solid fa-radar"></i>
+                    <span>Launch Tracking</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <button onclick="openPortalModal()" class="glass-card hover:bg-deep-card/90 text-gray-200 font-mono font-bold text-sm px-8 py-3.5 rounded-full transition duration-300 flex items-center space-x-2">
+                    <i class="fa-solid fa-cubes text-violet-neon"></i>
+                    <span>Explore Portal</span>
+                </button>
+            </div>
+
+            <!-- CENTRAL GRAPHIC LAYOUT (Canvas Globe + 4 Glass Floating Feature Cards) -->
+            <div class="relative max-w-5xl mx-auto min-h-[500px] flex items-center justify-center">
+                
+                <!-- Interactive Canvas Purple Globe -->
+                <div class="relative w-full max-w-[420px] aspect-square flex items-center justify-center">
+                    <canvas id="purple-globe-canvas" class="w-full h-full cursor-grab active:cursor-grabbing z-10"></canvas>
+                    
+                    <!-- Ambient Glow Behind Globe -->
+                    <div class="absolute inset-0 bg-violet-electric/20 rounded-full blur-3xl -z-10 animate-pulse"></div>
+                </div>
+
+                <!-- Floating Glass Cards (Matching Prompt Template Layout) -->
+                
+                <!-- Top-Left: AI Models / Live Fleet Tracking -->
+                <div class="hidden md:flex absolute top-4 left-0 lg:left-4 glass-card p-4 rounded-2xl max-w-[220px] items-start space-x-3 z-20 shadow-purple-sm">
+                    <div class="p-3 bg-violet-dark/50 border border-violet-electric/40 text-violet-neon rounded-xl text-base">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold font-mono text-white mb-1">Live Fleet Telemetry</h4>
+                        <p class="text-[10px] text-gray-400">Real-time GPS & biometric route monitoring.</p>
+                        <a href="#operations" class="mt-2 inline-flex items-center text-[10px] font-mono text-violet-neon hover:underline">View Live <i class="fa-solid fa-chevron-right ml-1 text-[8px]"></i></a>
+                    </div>
+                </div>
+
+                <!-- Bottom-Left: Automation / Autonomous Warehousing -->
+                <div class="hidden md:flex absolute bottom-8 left-4 lg:left-8 glass-card p-4 rounded-2xl max-w-[220px] items-start space-x-3 z-20 shadow-purple-sm">
+                    <div class="p-3 bg-violet-dark/50 border border-violet-electric/40 text-violet-neon rounded-xl text-base">
+                        <i class="fa-solid fa-boxes-packing"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold font-mono text-white mb-1">Autonomous Storage</h4>
+                        <p class="text-[10px] text-gray-400">Robotic bin pickers & automated fulfillment.</p>
+                        <a href="#operations" class="mt-2 inline-flex items-center text-[10px] font-mono text-violet-neon hover:underline">Robotics Hub <i class="fa-solid fa-chevron-right ml-1 text-[8px]"></i></a>
+                    </div>
+                </div>
+
+                <!-- Top-Right: Analytics / Predictive Route Engine -->
+                <div class="hidden md:flex absolute top-4 right-0 lg:right-4 glass-card p-4 rounded-2xl max-w-[220px] items-start space-x-3 z-20 shadow-purple-sm">
+                    <div class="p-3 bg-violet-dark/50 border border-violet-electric/40 text-violet-neon rounded-xl text-base">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold font-mono text-white mb-1">Predictive Analytics</h4>
+                        <p class="text-[10px] text-gray-400">Machine-learning ETA & delay prevention.</p>
+                        <a href="#operations" class="mt-2 inline-flex items-center text-[10px] font-mono text-violet-neon hover:underline">Neural Models <i class="fa-solid fa-chevron-right ml-1 text-[8px]"></i></a>
+                    </div>
+                </div>
+
+                <!-- Bottom-Right: Integrations / Smart API Hooks -->
+                <div class="hidden md:flex absolute bottom-8 right-4 lg:right-8 glass-card p-4 rounded-2xl max-w-[220px] items-start space-x-3 z-20 shadow-purple-sm">
+                    <div class="p-3 bg-violet-dark/50 border border-violet-electric/40 text-violet-neon rounded-xl text-base">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold font-mono text-white mb-1">Smart Integrations</h4>
+                        <p class="text-[10px] text-gray-400">RESTful hooks for SAP, Shopify & ERPs.</p>
+                        <a href="#services" class="mt-2 inline-flex items-center text-[10px] font-mono text-violet-neon hover:underline">API Docs <i class="fa-solid fa-chevron-right ml-1 text-[8px]"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Metric Bar (Inspired by template metric banner) -->
+            <div class="mt-12 glass-card p-4 rounded-2xl border border-violet-electric/30 flex flex-wrap items-center justify-between gap-6 max-w-5xl mx-auto text-xs font-mono">
+                <div class="flex items-center space-x-3">
+                    <div class="flex -space-x-2 overflow-hidden">
+                        <img class="inline-block h-8 w-8 rounded-full ring-2 ring-violet-electric" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Client Avatar">
+                        <img class="inline-block h-8 w-8 rounded-full ring-2 ring-violet-electric" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" alt="Client Avatar">
+                        <img class="inline-block h-8 w-8 rounded-full ring-2 ring-violet-electric" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100" alt="Client Avatar">
+                    </div>
+                    <div>
+                        <p class="text-white font-bold">Trusted by 12,000+ Enterprises</p>
+                        <p class="text-[10px] text-gray-400">Across 180 Countries</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center sm:text-left">
+                    <div>
+                        <span class="text-lg font-extrabold text-violet-neon block">99.98%</span>
+                        <span class="text-[10px] text-gray-400 uppercase">On-Time ETA</span>
+                    </div>
+                    <div>
+                        <span class="text-lg font-extrabold text-white block">4.2M+</span>
+                        <span class="text-[10px] text-gray-400 uppercase">Waybills/Mo</span>
+                    </div>
+                    <div>
+                        <span class="text-lg font-extrabold text-violet-neon block">180+</span>
+                        <span class="text-[10px] text-gray-400 uppercase">Active Hubs</span>
+                    </div>
+                    <div>
+                        <span class="text-lg font-extrabold text-white block">24/7</span>
+                        <span class="text-[10px] text-gray-400 uppercase">Global Dispatch</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- QUICK TRACKING SEARCH SECTION -->
+    <section id="tracking-section" class="py-16 relative z-20 border-y border-violet-electric/20 bg-deep-surface/80">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <span class="text-xs font-mono uppercase tracking-widest text-violet-neon">Sub-Meter Precision Telemetry</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-mono mt-1">Track Shipment Waybill</h2>
+            </div>
+
+            <!-- Interactive Tracking Search Bar -->
+            <div class="glass-card p-3 rounded-2xl border border-violet-electric/40 flex flex-col sm:flex-row items-center gap-3 shadow-purple-glow">
+                <div class="relative flex-1 w-full">
+                    <i class="fa-solid fa-barcode absolute left-4 top-3.5 text-violet-neon"></i>
+                    <input type="text" id="waybill-input" value="FT-9821-X" placeholder="Enter Waybill or Cargo ID (e.g. FT-9821-X, FT-4412-Z)..." class="w-full pl-11 pr-4 py-3 bg-deep-card/90 border border-violet-electric/20 rounded-xl text-xs font-mono text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-electric">
+                </div>
+                <button onclick="executeWaybillSearch()" class="w-full sm:w-auto bg-gradient-to-r from-violet-electric to-violet-dark hover:from-violet-neon hover:to-violet-electric text-white font-mono font-bold text-xs px-8 py-3.5 rounded-xl shadow-purple-glow transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-magnifying-glass-location"></i>
+                    <span>Track Package</span>
+                </button>
+            </div>
+
+            <div class="mt-3 flex flex-wrap items-center justify-between text-[11px] font-mono text-gray-400 px-2">
+                <span>Try Demo Tracking IDs: <button onclick="quickFillTrack('FT-9821-X')" class="text-violet-neon hover:underline">FT-9821-X</button> | <button onclick="quickFillTrack('FT-4412-Z')" class="text-violet-neon hover:underline">FT-4412-Z</button></span>
+                <span class="text-violet-neon"><i class="fa-solid fa-circle text-[8px] animate-ping mr-1"></i> Global Sensor Network Online</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES & ENTERPRISE SOLUTIONS -->
+    <section id="services" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono uppercase tracking-widest text-violet-neon">End-To-End Supply Chain Infrastructure</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2 mb-4">Architected for Speed & Precision</h2>
+                <p class="text-gray-400 text-sm">Deploy FastTrack autonomous logistics modules across your enterprise network in minutes.</p>
+            </div>
+
+            <!-- 6 Glassmorphic Service Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-violet-dark/50 border border-violet-electric/40 text-violet-neon flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-plane-departure"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-mono text-white mb-2">Air Freight Command</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Prioritized sky-freight corridors with active weather re-routing and customs pre-clearance AI.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-violet-electric/20 flex items-center justify-between text-xs font-mono">
+                        <span class="text-violet-neon font-bold">Priority Air</span>
+                        <button onclick="showToast('Air Freight Command Specs loaded.')" class="text-gray-300 hover:text-white"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-violet-dark/50 border border-violet-electric/40 text-violet-neon flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-ship"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-mono text-white mb-2">Ocean & Maritime Telematics</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Satellite-tracked cargo containers with live temperature, humidity, and shock sensor monitoring.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-violet-electric/20 flex items-center justify-between text-xs font-mono">
+                        <span class="text-violet-neon font-bold">Port-to-Port</span>
+                        <button onclick="showToast('Maritime Telematics Specs loaded.')" class="text-gray-300 hover:text-white"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-violet-dark/50 border border-violet-electric/40 text-violet-neon flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-truck-droplet"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-mono text-white mb-2">Autonomous Ground Transport</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Electric Heavy Rigs & CyberVans synchronized with real-time dynamic traffic density nodes.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-violet-electric/20 flex items-center justify-between text-xs font-mono">
+                        <span class="text-violet-neon font-bold">Zero Carbon</span>
+                        <button onclick="showToast('Autonomous Transport Specs loaded.')" class="text-gray-300 hover:text-white"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-violet-dark/50 border border-violet-electric/40 text-violet-neon flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-mono text-white mb-2">Robotic Warehousing</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Automated pick-and-pack fulfillment hubs operating 24/7 with 99.99% inventory accuracy.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-violet-electric/20 flex items-center justify-between text-xs font-mono">
+                        <span class="text-violet-neon font-bold">Dark Fulfillment</span>
+                        <button onclick="showToast('Robotic Storage Specs loaded.')" class="text-gray-300 hover:text-white"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-violet-dark/50 border border-violet-electric/40 text-violet-neon flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-file-contract"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-mono text-white mb-2">Customs & Compliance AI</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Automated tariff verification, cross-border documentation, and instant escrow settlements.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-violet-electric/20 flex items-center justify-between text-xs font-mono">
+                        <span class="text-violet-neon font-bold">Auto-Clearance</span>
+                        <button onclick="showToast('Compliance AI Specs loaded.')" class="text-gray-300 hover:text-white"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-violet-dark/50 border border-violet-electric/40 text-violet-neon flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-drone"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-mono text-white mb-2">Last-Mile AeroDrones</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">High-payload autonomous aerial delivery for urgent medical, electronics, and priority freight.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-violet-electric/20 flex items-center justify-between text-xs font-mono">
+                        <span class="text-violet-neon font-bold">Under 30 Mins</span>
+                        <button onclick="showToast('AeroDrone Specs loaded.')" class="text-gray-300 hover:text-white"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- OPERATIONS INTERACTIVE TAB DEMO -->
+    <section id="operations" class="py-20 bg-deep-surface/60 border-y border-violet-electric/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-mono uppercase tracking-widest text-violet-neon">Live Mesh Telematics</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">FastTrack Operations Control</h2>
+            </div>
+
+            <!-- Operations Tab Switcher -->
+            <div class="flex justify-center mb-8">
+                <div class="glass-card p-1.5 rounded-xl border border-violet-electric/30 inline-flex space-x-2 font-mono text-xs">
+                    <button onclick="switchOpsTab('telemetry')" id="opstab-telemetry" class="px-5 py-2.5 rounded-lg font-bold text-white bg-violet-electric shadow-purple-sm transition">Live Telemetry</button>
+                    <button onclick="switchOpsTab('fleet')" id="opstab-fleet" class="px-5 py-2.5 rounded-lg font-bold text-gray-400 hover:text-white transition">CyberFleet</button>
+                    <button onclick="switchOpsTab('warehouse')" id="opstab-warehouse" class="px-5 py-2.5 rounded-lg font-bold text-gray-400 hover:text-white transition">Warehouse Matrix</button>
+                </div>
+            </div>
+
+            <!-- Operations Content Panel -->
+            <div class="glass-card p-6 rounded-2xl border border-violet-electric/40 font-mono text-xs">
+                
+                <!-- Tab 1: Live Telemetry -->
+                <div id="opspanel-telemetry" class="ops-panel space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 bg-deep-card/90 p-5 rounded-xl border border-violet-electric/20">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="font-bold text-white flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-violet-neon animate-pulse"></span>
+                                    Autonomous Route Dispatch Corridors
+                                </h4>
+                                <span class="text-[10px] text-violet-neon bg-violet-dark/60 px-2.5 py-1 rounded-full border border-violet-electric/30">99.8% Efficiency</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-deep-surface rounded-lg flex justify-between items-center border border-violet-electric/20">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fa-solid fa-truck-fast text-violet-neon text-base"></i>
+                                        <div>
+                                            <p class="font-bold text-white">Route FT-EV-08 (NY to PHL)</p>
+                                            <p class="text-[10px] text-gray-400">Cargo: Medical Microchips (Cryo-18°C)</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-violet-neon font-bold">ETA: 24 Mins</span>
+                                </div>
+                                <div class="p-3 bg-deep-surface rounded-lg flex justify-between items-center border border-violet-electric/20">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fa-solid fa-plane text-violet-neon text-base"></i>
+                                        <div>
+                                            <p class="font-bold text-white">Flight FT-SKY-42 (SFO to JFK)</p>
+                                            <p class="text-[10px] text-gray-400">Cargo: High-Value Consumer Electronics</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-violet-neon font-bold">ETA: 2.1 Hrs</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel Metrics Side -->
+                        <div class="bg-deep-card/90 p-5 rounded-xl border border-violet-electric/20 flex flex-col justify-between space-y-4">
+                            <div>
+                                <span class="text-gray-400 text-[10px] uppercase">Active Neural Mesh Nodes</span>
+                                <h3 class="text-2xl font-extrabold text-white mt-1">42,890 Rigs / Drones</h3>
+                                <p class="text-violet-neon text-[10px] mt-1"><i class="fa-solid fa-check mr-1"></i> Sub-second telemetry sync</p>
+                            </div>
+                            <button onclick="openPortalModal()" class="w-full py-3 bg-gradient-to-r from-violet-electric to-violet-dark hover:from-violet-neon text-white font-bold text-xs rounded-xl transition shadow-purple-glow">Launch Console Analytics</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: CyberFleet -->
+                <div id="opspanel-fleet" class="ops-panel hidden space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="p-4 bg-deep-card rounded-xl border border-violet-electric/30">
+                            <span class="text-gray-400 text-[10px]">Electric Heavy Rigs</span>
+                            <h4 class="text-xl font-bold text-violet-neon mt-1">1,420 Active</h4>
+                        </div>
+                        <div class="p-4 bg-deep-card rounded-xl border border-violet-electric/30">
+                            <span class="text-gray-400 text-[10px]">Autonomous AeroDrones</span>
+                            <h4 class="text-xl font-bold text-white mt-1">840 Active</h4>
+                        </div>
+                        <div class="p-4 bg-deep-card rounded-xl border border-violet-electric/30">
+                            <span class="text-gray-400 text-[10px]">Urban First-Mile CyberVans</span>
+                            <h4 class="text-xl font-bold text-violet-neon mt-1">2,100 Active</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Warehouse Matrix -->
+                <div id="opspanel-warehouse" class="ops-panel hidden space-y-4">
+                    <div class="p-4 bg-deep-card rounded-xl border border-violet-electric/30 flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold text-white">NY CyberHub Alpha (Dark Warehouse)</h4>
+                            <p class="text-gray-400 text-[10px] mt-0.5">Automated Bins: 2,700 RFID Racks | Robot Units: 124</p>
+                        </div>
+                        <span class="text-violet-neon font-bold">98.4% Capacity</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING & ROI CALCULATOR SECTION -->
+    <section id="pricing" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono uppercase tracking-widest text-violet-neon">Predictable Enterprise Pricing</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2 mb-4">Scalable Plans for Global Supply Chains</h2>
+                <p class="text-gray-400 text-sm">Choose your plan or request a custom mesh configuration for enterprise fleets.</p>
+            </div>
+
+            <!-- Pricing Tier Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Plan 1: Starter -->
+                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-mono text-gray-400 uppercase">Growth Fleets</span>
+                        <h3 class="text-2xl font-bold font-mono text-white mt-1">Starter Mesh</h3>
+                        <p class="text-xs text-gray-400 mt-2">Ideal for local freight operators and regional e-commerce hubs.</p>
+                        <div class="mt-6 mb-6">
+                            <span class="text-4xl font-extrabold text-white">$499</span>
+                            <span class="text-xs text-gray-400 font-mono"> / month</span>
+                        </div>
+                        <ul class="space-y-3 text-xs font-mono text-gray-300">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Up to 50 Autonomous Vehicles</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Sub-meter Waybill Telemetry</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Standard REST API Hooks</li>
+                            <li class="flex items-center text-gray-500"><i class="fa-solid fa-xmark mr-2"></i> Dedicated Neural Route AI</li>
+                        </ul>
+                    </div>
+                    <button onclick="showToast('Starter Plan Selected.')" class="mt-8 w-full py-3 bg-deep-card hover:bg-deep-surface border border-violet-electric/40 text-violet-neon font-mono font-bold text-xs rounded-xl transition">Select Starter</button>
+                </div>
+
+                <!-- Plan 2: Enterprise (Featured Glowing) -->
+                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between border-2 border-violet-electric shadow-purple-glow relative scale-105">
+                    <span class="absolute -top-3.5 right-8 bg-gradient-to-r from-violet-electric to-violet-dark text-white text-[10px] font-mono font-bold px-3 py-1 rounded-full uppercase shadow-purple-sm">Most Popular</span>
+                    <div>
+                        <span class="text-xs font-mono text-violet-neon uppercase">Global Enterprise</span>
+                        <h3 class="text-2xl font-bold font-mono text-white mt-1">Enterprise Command</h3>
+                        <p class="text-xs text-gray-400 mt-2">Full autonomous fleet orchestration and AI predictive route optimization.</p>
+                        <div class="mt-6 mb-6">
+                            <span class="text-4xl font-extrabold text-violet-neon">$1,499</span>
+                            <span class="text-xs text-gray-400 font-mono"> / month</span>
+                        </div>
+                        <ul class="space-y-3 text-xs font-mono text-gray-300">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Up to 500 Vehicles & Drones</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Neural Route Optimization AI</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Dark Warehouse Integration</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> 24/7 Dedicated Dispatch SLA</li>
+                        </ul>
+                    </div>
+                    <button onclick="openPortalModal()" class="mt-8 w-full py-3 bg-gradient-to-r from-violet-electric to-violet-dark hover:from-violet-neon text-white font-mono font-bold text-xs rounded-xl shadow-purple-glow transition">Launch Enterprise</button>
+                </div>
+
+                <!-- Plan 3: Custom Global Mesh -->
+                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-mono text-gray-400 uppercase">Custom Grid</span>
+                        <h3 class="text-2xl font-bold font-mono text-white mt-1">Global Mesh</h3>
+                        <p class="text-xs text-gray-400 mt-2">Custom dark warehousing, air cargo corridors, and sovereign encryption.</p>
+                        <div class="mt-6 mb-6">
+                            <span class="text-4xl font-extrabold text-white">Custom</span>
+                        </div>
+                        <ul class="space-y-3 text-xs font-mono text-gray-300">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Unlimited Vehicles & Air Drones</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Custom Smart Contract Escrows</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> On-Premise AI Deployment</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-violet-neon mr-2"></i> Sovereign Compliance SLAs</li>
+                        </ul>
+                    </div>
+                    <button onclick="showToast('Contacting FastTrack Solutions Team...')" class="mt-8 w-full py-3 bg-deep-card hover:bg-deep-surface border border-violet-electric/40 text-violet-neon font-mono font-bold text-xs rounded-xl transition">Request Custom Quote</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- GLOBAL MESH TESTIMONIALS -->
+    <section id="testimonials" class="py-20 bg-deep-surface/50 border-t border-violet-electric/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-mono uppercase tracking-widest text-violet-neon">Global Enterprise Trust</span>
+                <h2 class="text-3xl font-extrabold text-white mt-2">Verified Dispatch Quotes</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <p class="text-gray-300 italic">"FastTrack cut our cross-border transit delays by 42%. The real-time purple telemetry HUD gives our dispatchers unmatched visibility."</p>
+                    <div class="flex items-center space-x-3 pt-2 border-t border-violet-electric/20">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" class="w-10 h-10 rounded-full object-cover ring-2 ring-violet-electric">
+                        <div>
+                            <p class="font-bold text-white">Elena Rostova</p>
+                            <p class="text-[10px] text-gray-400">VP Supply Chain, Global Logistics</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <p class="text-gray-300 italic">"Integrating FastTrack dark warehouse robotics reduced our pick times to under 12 seconds per SKU. Outstanding performance."</p>
+                    <div class="flex items-center space-x-3 pt-2 border-t border-violet-electric/20">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" class="w-10 h-10 rounded-full object-cover ring-2 ring-violet-electric">
+                        <div>
+                            <p class="font-bold text-white">David Chen</p>
+                            <p class="text-[10px] text-gray-400">Director of Operations, CyberTech</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <p class="text-gray-300 italic">"The automated smart contract settlements saved us hundreds of administrative hours each quarter."</p>
+                    <div class="flex items-center space-x-3 pt-2 border-t border-violet-electric/20">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100" class="w-10 h-10 rounded-full object-cover ring-2 ring-violet-electric">
+                        <div>
+                            <p class="font-bold text-white">Sarah Jenkins</p>
+                            <p class="text-[10px] text-gray-400">Head of Freight, Apex Network</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-deep-bg border-t border-violet-electric/30 pt-16 pb-12 font-mono text-xs relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="space-y-4">
+                    <a href="#" class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-neon via-violet-electric to-violet-dark flex items-center justify-center text-white shadow-purple-glow">
+                            <i class="fa-solid fa-bolt text-sm"></i>
+                        </div>
+                        <span class="text-lg font-extrabold tracking-wider text-white">FAST<span class="text-violet-neon">TRACK</span></span>
+                    </a>
+                    <p class="text-gray-400 leading-relaxed text-[11px]">Autonomous global supply chain OS powering next-generation air, sea, and ground freight.</p>
+                    <div class="flex items-center space-x-2 text-violet-neon text-[11px]">
+                        <span class="w-2 h-2 rounded-full bg-violet-neon animate-ping"></span>
+                        <span>All Regional Nodes Operational</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white uppercase tracking-wider mb-4">Core Mesh</h4>
+                    <ul class="space-y-2 text-gray-400 text-[11px]">
+                        <li><a href="#tracking-section" class="hover:text-violet-neon transition">Live Waybill Telemetry</a></li>
+                        <li><a href="#services" class="hover:text-violet-neon transition">Air Freight Command</a></li>
+                        <li><a href="#services" class="hover:text-violet-neon transition">Robotic Storage Matrix</a></li>
+                        <li><a href="#operations" class="hover:text-violet-neon transition">Autonomous Rigs</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white uppercase tracking-wider mb-4">Enterprise APIs</h4>
+                    <ul class="space-y-2 text-gray-400 text-[11px]">
+                        <li><a href="#" onclick="showToast('Loading SDK Documentation...')" class="hover:text-violet-neon transition">RESTful Telematics API</a></li>
+                        <li><a href="#" onclick="showToast('Loading Smart Contract Specs...')" class="hover:text-violet-neon transition">Smart Contract Escrows</a></li>
+                        <li><a href="#" onclick="showToast('Loading AI Route Models...')" class="hover:text-violet-neon transition">Predictive Neural SDK</a></li>
+                        <li><a href="#" onclick="showToast('Loading Security Center...')" class="hover:text-violet-neon transition">Sovereign Encryption</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white uppercase tracking-wider mb-4">Dispatch Dispatch Feed</h4>
+                    <p class="text-gray-400 text-[11px] mb-3">Subscribe to FastTrack system status updates.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="operator@enterprise.com" class="w-full px-3 py-2 bg-deep-card border border-violet-electric/30 rounded-l-xl text-white focus:outline-none text-[11px]">
+                        <button onclick="showToast('Subscribed to System Alerts')" class="bg-violet-electric hover:bg-violet-neon text-white font-bold px-4 py-2 rounded-r-xl transition"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-violet-electric/20 flex flex-col sm:flex-row justify-between items-center text-gray-500 text-[11px]">
+                <p>&copy; 2026 FastTrack Logistics Inc. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-violet-neon">Privacy Policy</a>
+                    <a href="#" class="hover:text-violet-neon">Terms of Service</a>
+                    <a href="#" class="hover:text-violet-neon">System Status</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: WAYBILL TELEMETRY SEARCH RESULT -->
+    <div id="waybill-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl border border-violet-electric max-w-xl w-full p-6 space-y-6 font-mono shadow-purple-glow">
+            <div class="flex justify-between items-start border-b border-violet-electric/30 pb-4">
+                <div>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Sub-Meter Telemetry Feed</span>
+                    <h3 class="text-xl font-extrabold text-white" id="modal-waybill-id">FT-9821-X</h3>
+                </div>
+                <button onclick="closeModal('waybill-modal')" class="text-gray-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 text-xs">
+                <div class="bg-deep-card p-3 rounded-xl border border-violet-electric/20">
+                    <span class="text-gray-400 text-[10px]">Origin Node</span>
+                    <p class="font-bold text-white mt-0.5" id="modal-origin">NY CyberHub Alpha</p>
+                </div>
+                <div class="bg-deep-card p-3 rounded-xl border border-violet-electric/20">
+                    <span class="text-gray-400 text-[10px]">Destination Node</span>
+                    <p class="font-bold text-white mt-0.5" id="modal-dest">PHL Quantum Depot</p>
+                </div>
+                <div class="bg-deep-card p-3 rounded-xl border border-violet-electric/20">
+                    <span class="text-gray-400 text-[10px]">Cargo Temp / Status</span>
+                    <p class="font-bold text-violet-neon mt-0.5" id="modal-temp">18.4°C / Optimal</p>
+                </div>
+                <div class="bg-deep-card p-3 rounded-xl border border-violet-electric/20">
+                    <span class="text-gray-400 text-[10px]">Estimated Arrival</span>
+                    <p class="font-bold text-violet-neon mt-0.5" id="modal-eta">14:20 EST (On-Time)</p>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between text-xs font-bold mb-1">
+                    <span class="text-gray-300">Route Completion Progress</span>
+                    <span class="text-violet-neon">78%</span>
+                </div>
+                <div class="w-full bg-deep-surface rounded-full h-2.5 border border-violet-electric/30 overflow-hidden">
+                    <div class="bg-gradient-to-r from-violet-dark via-violet-electric to-violet-neon h-2.5 rounded-full shadow-purple-sm" style="width: 78%"></div>
+                </div>
+            </div>
+
+            <button onclick="closeModal('waybill-modal')" class="w-full py-3 bg-gradient-to-r from-violet-electric to-violet-dark text-white font-bold text-xs rounded-xl shadow-purple-glow transition">Close Telemetry Window</button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: PORTAL CONSOLE SIMULATION (Chart.js Inside) -->
+    <div id="portal-modal" class="fixed inset-0 bg-black/85 backdrop-blur-lg z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl border border-violet-electric max-w-4xl w-full p-6 space-y-6 font-mono shadow-purple-glow max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-violet-electric/30 pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-violet-electric flex items-center justify-center text-white font-bold">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-extrabold text-white">FastTrack Cloud Console</h3>
+                        <p class="text-[10px] text-gray-400">Live Enterprise Mesh Analytics</p>
+                    </div>
+                </div>
+                <button onclick="closeModal('portal-modal')" class="text-gray-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- Modal Chart Container -->
+            <div class="bg-deep-card/90 p-4 rounded-2xl border border-violet-electric/30">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-bold text-white">24-Hour Autonomous Transit Velocity</span>
+                    <span class="text-[10px] text-violet-neon">Live Feed</span>
+                </div>
+                <div class="h-64 w-full">
+                    <canvas id="modalChart"></canvas>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                <div class="p-3 bg-deep-card rounded-xl border border-violet-electric/20">
+                    <span class="text-gray-400 text-[10px]">Active Deliveries</span>
+                    <p class="font-extrabold text-violet-neon text-lg mt-0.5">14,289</p>
+                </div>
+                <div class="p-3 bg-deep-card rounded-xl border border-violet-electric/20">
+                    <span class="text-gray-400 text-[10px]">Average Delay Rate</span>
+                    <p class="font-extrabold text-white text-lg mt-0.5">0.02%</p>
+                </div>
+                <div class="p-3 bg-deep-card rounded-xl border border-violet-electric/20">
+                    <span class="text-gray-400 text-[10px]">Carbon Savings</span>
+                    <p class="font-extrabold text-violet-neon text-lg mt-0.5">142 Tons</p>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-2">
+                <button onclick="closeModal('portal-modal')" class="px-5 py-2.5 bg-deep-card hover:bg-deep-surface border border-violet-electric/40 text-gray-300 font-bold rounded-xl transition">Exit Preview</button>
+                <button onclick="showToast('Redirecting to full FastTrack Dashboard...')" class="px-5 py-2.5 bg-violet-electric hover:bg-violet-neon text-white font-bold rounded-xl shadow-purple-glow transition">Full Console View</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        let modalChartInstance = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initPurpleGlobeCanvas();
+        });
+
+        // 3D-effect Glowing Purple Globe Canvas Script
+        function initPurpleGlobeCanvas() {
+            const canvas = document.getElementById('purple-globe-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = canvas.parentElement.clientWidth;
+            let height = canvas.height = canvas.parentElement.clientHeight;
+
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                if (!canvas.parentElement) return;
+                width = canvas.width = canvas.parentElement.clientWidth;
+                height = canvas.height = canvas.parentElement.clientHeight;
+            });
+
+            // Globe Particle Points
+            const numParticles = 220;
+            const radius = Math.min(width, height) * 0.38;
+            const particles = [];
+
+            for (let i = 0; i < numParticles; i++) {
+                const phi = Math.acos(-1 + (2 * i) / numParticles);
+                const theta = Math.sqrt(numParticles * Math.PI) * phi;
+
+                particles.push({
+                    x: radius * Math.cos(theta) * Math.sin(phi),
+                    y: radius * Math.sin(theta) * Math.sin(phi),
+                    z: radius * Math.cos(phi),
+                    baseX: radius * Math.cos(theta) * Math.sin(phi),
+                    baseY: radius * Math.sin(theta) * Math.sin(phi),
+                    baseZ: radius * Math.cos(phi)
+                });
+            }
+
+            let angleY = 0;
+            let angleX = 0.2;
+
+            function renderGlobe() {
+                ctx.clearRect(0, 0, width, height);
+
+                const cx = width / 2;
+                const cy = height / 2;
+
+                angleY += 0.008;
+
+                // Draw Outer Atmospheric Purple Glow Ring
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius + 15, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(157, 78, 221, 0.25)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Draw Particle Nodes
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+
+                    // Y Rotation
+                    let x1 = p.baseX * Math.cos(angleY) - p.baseZ * Math.sin(angleY);
+                    let z1 = p.baseX * Math.sin(angleY) + p.baseZ * Math.cos(angleY);
+
+                    // X Rotation
+                    let y2 = p.baseY * Math.cos(angleX) - z1 * Math.sin(angleX);
+                    let z2 = p.baseY * Math.sin(angleX) + z1 * Math.cos(angleX);
+
+                    // Perspective Scale
+                    const alpha = Math.max(0.1, (z2 + radius) / (2 * radius));
+                    const scale = 1 + z2 / (radius * 2);
+
+                    const projX = cx + x1;
+                    const projY = cy + y2;
+
+                    ctx.beginPath();
+                    ctx.arc(projX, projY, 2 * scale, 0, Math.PI * 2);
+                    ctx.fillStyle = z2 > 0 ? `rgba(199, 125, 255, ${alpha})` : `rgba(123, 44, 191, ${alpha * 0.5})`;
+                    ctx.fill();
+
+                    // Connect Near Points with Purple Arcs
+                    if (z2 > 0 && i % 6 === 0) {
+                        for (let j = i + 1; j < particles.length; j += 12) {
+                            const p2 = particles[j];
+                            let x1_2 = p2.baseX * Math.cos(angleY) - p2.baseZ * Math.sin(angleY);
+                            let z1_2 = p2.baseX * Math.sin(angleY) + p2.baseZ * Math.cos(angleY);
+                            let y2_2 = p2.baseY * Math.cos(angleX) - z1_2 * Math.sin(angleX);
+
+                            const projX2 = cx + x1_2;
+                            const projY2 = cy + y2_2;
+
+                            const dist = Math.hypot(projX - projX2, projY - projY2);
+                            if (dist < 75) {
+                                ctx.beginPath();
+                                ctx.moveTo(projX, projY);
+                                ctx.lineTo(projX2, projY2);
+                                ctx.strokeStyle = `rgba(199, 125, 255, ${0.35 * (1 - dist / 75)})`;
+                                ctx.lineWidth = 1;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                }
+
+                requestAnimationFrame(renderGlobe);
+            }
+
+            renderGlobe();
+        }
+
+        // Interactive Waybill Tracking Search
+        function executeWaybillSearch() {
+            const input = document.getElementById('waybill-input').value.trim();
+            if (!input) {
+                showToast('Please enter a valid Waybill ID.');
+                return;
+            }
+
+            document.getElementById('modal-waybill-id').innerText = input.toUpperCase();
+            
+            if (input.toUpperCase() === 'FT-4412-Z') {
+                document.getElementById('modal-origin').innerText = 'SFO Air Hub Beta';
+                document.getElementById('modal-dest').innerText = 'JFK Express Terminal';
+                document.getElementById('modal-temp').innerText = '21.0°C / Normal';
+                document.getElementById('modal-eta').innerText = '18:45 EST (On-Time)';
+            } else {
+                document.getElementById('modal-origin').innerText = 'NY CyberHub Alpha';
+                document.getElementById('modal-dest').innerText = 'PHL Quantum Depot';
+                document.getElementById('modal-temp').innerText = '18.4°C / Cryo Optimal';
+                document.getElementById('modal-eta').innerText = '14:20 EST (On-Time)';
+            }
+
+            openModal('waybill-modal');
+        }
+
+        function quickFillTrack(id) {
+            document.getElementById('waybill-input').value = id;
+            executeWaybillSearch();
+        }
+
+        // Operations Tab Switching
+        function switchOpsTab(tabKey) {
+            document.querySelectorAll('.ops-panel').forEach(p => p.classList.add('hidden'));
+            
+            const selectedPanel = document.getElementById('opspanel-' + tabKey);
+            if (selectedPanel) selectedPanel.classList.remove('hidden');
+
+            ['telemetry', 'fleet', 'warehouse'].forEach(key => {
+                const btn = document.getElementById('opstab-' + key);
+                if (btn) {
+                    if (key === tabKey) {
+                        btn.className = "px-5 py-2.5 rounded-lg font-bold text-white bg-violet-electric shadow-purple-sm transition";
+                    } else {
+                        btn.className = "px-5 py-2.5 rounded-lg font-bold text-gray-400 hover:text-white transition";
+                    }
+                }
+            });
+        }
+
+        // Modal Helpers
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+        }
+
+        function openPortalModal() {
+            openModal('portal-modal');
+            setTimeout(renderPortalChart, 150);
+        }
+
+        // Chart.js Setup for Console Preview
+        function renderPortalChart() {
+            const ctx = document.getElementById('modalChart');
+            if (!ctx) return;
+
+            if (modalChartInstance) modalChartInstance.destroy();
+
+            modalChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [{
+                        label: 'Neural Route Velocity (km/h)',
+                        data: [84, 91, 98, 92, 104, 110],
+                        borderColor: '#c77dff',
+                        backgroundColor: 'rgba(199, 125, 255, 0.15)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#c77dff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(157, 78, 221, 0.15)' },
+                            ticks: { color: '#a1a1aa', font: { family: 'JetBrains Mono' } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#a1a1aa', font: { family: 'JetBrains Mono' } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Toast Feedback System
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = "glass-card p-4 rounded-xl border border-violet-electric/40 text-xs font-mono text-white shadow-purple-glow pointer-events-auto flex items-center space-x-3 transition-all duration-300 transform translate-y-4 opacity-0";
+            toast.innerHTML = `<i class="fa-solid fa-bolt text-violet-neon"></i><span>${msg}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
